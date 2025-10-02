@@ -1,4 +1,5 @@
 import random
+import snowman_ascii as snow
 
 # List of secret words
 WORDS = ["python", "git", "github", "snowman", "meltdown"]
@@ -11,11 +12,14 @@ def get_random_word():
 
 def play_game():
     secret_word = get_random_word()
-    print("Welcome to Snowman Meltdown!")
-    print("Secret word selected: " + secret_word)  # for testing, later remove this line
+    guessed_letters = []
+    mistakes = 0
 
-    # TODO: Build your game loop here.
-    # For now, simply prompt the user once:
+    print("Welcome to Snowman Meltdown!")
+    # For now, display the initial game state.
+    snow.display_game_state(mistakes, secret_word, guessed_letters)
+
+    # Prompt user for one guess (logic to be enhanced later)
     guess = input("Guess a letter: ").lower()
     print("You guessed:", guess)
 

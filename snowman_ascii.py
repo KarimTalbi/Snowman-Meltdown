@@ -27,3 +27,17 @@ STAGES = [
      /___\\ 
      """
  ]
+
+
+def display_game_state(mistakes, secret_word, guessed_letters):
+    # Display the snowman stage for the current number of mistakes.
+    print(STAGES[mistakes])
+    # Build a display version of the secret word.
+    display_word = ""
+    for letter in secret_word:
+        if letter in guessed_letters:
+            display_word += letter + " "
+        else:
+            display_word += "_ "
+    print("Word: ", display_word)
+    print("\n")
