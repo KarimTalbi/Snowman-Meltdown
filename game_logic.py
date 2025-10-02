@@ -4,6 +4,18 @@ from ascii_art import STAGES
 # List of secret words
 WORDS = ["python", "git", "github", "snowman", "meltdown"]
 
+class NotSingleCharError(Exception):
+    pass
+
+class NoInputError(Exception):
+    pass
+
+class AlreadyGuessedError(Exception):
+    pass
+
+class NotAlphaError(Exception):
+    pass
+
 
 def get_random_word():
     """Selects a random word from the list."""
@@ -30,6 +42,7 @@ def display_game_state(mistakes, secret_word, guessed_letters):
 def play_game():
     secret_word = get_random_word()
     guessed_letters = []
+    wrong_letters = []
     mistakes = 0
 
     print("Welcome to Snowman Meltdown!")
@@ -41,7 +54,26 @@ def play_game():
 
         display_game_state(mistakes, secret_word, guessed_letters)
 
-        guess = input("Guess a letter: ").lower().strip()
+        while True:
+            try:
+                guess = input("Guess a letter: ").lower().strip()
+                if not guess:
+                    raise NoInputError("guess can't be empty")
+
+                if not guess.isalpha():
+                    raise NotAlphaError("guess must be letter of the alphabet")
+
+                if len(guess) != 1:
+                    raise NotSingleCharError("guess can only be 1 letter")
+
+                if guess in guessed_letters or guess in wrong_letters:
+                    raise AlreadyGuessedError(f"You have already guessed '{guess}'")
+
+                break
+
+            except Exception as e:
+                print(e)
+
         print("You guessed:", guess)
 
         if guess in secret_word:
@@ -49,6 +81,7 @@ def play_game():
 
         else:
             mistakes += 1
+            wrong_letters.append(guess)
 
         if mistakes >= len(STAGES) - 1:
             print("The snowman melted before you guessed the word")
