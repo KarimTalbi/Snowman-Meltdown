@@ -11,17 +11,20 @@ def get_random_word():
 
 
 def display_game_state(mistakes, secret_word, guessed_letters):
-    # Display the snowman stage for the current number of mistakes.
-    print(STAGES[mistakes])
+    if mistakes < len(STAGES) - 1:
+        print(STAGES[mistakes])
     # Build a display version of the secret word.
-    display_word = ""
-    for letter in secret_word:
-        if letter in guessed_letters:
-            display_word += letter + " "
-        else:
-            display_word += "_ "
-    print("Word: ", display_word)
-    print("\n")
+        display_word = ""
+        for letter in secret_word:
+            if letter in guessed_letters:
+                display_word += letter + " "
+            else:
+                display_word += "_ "
+        print("Word: ", display_word)
+        print("\n")
+
+    else:
+        print(STAGES[mistakes])
 
 
 def play_game():
@@ -32,11 +35,14 @@ def play_game():
     print("Welcome to Snowman Meltdown!")
 
     while True:
+        if len(guessed_letters) == len(secret_word):
+            print(f"You saved the snowman by guessing the word {secret_word}")
+            break
+
         display_game_state(mistakes, secret_word, guessed_letters)
 
         guess = input("Guess a letter: ").lower().strip()
         print("You guessed:", guess)
-
 
         if guess in secret_word:
             guessed_letters.append(guess)
@@ -44,16 +50,8 @@ def play_game():
         else:
             mistakes += 1
 
-        if mistakes >= len(STAGES):
+        if mistakes >= len(STAGES) - 1:
             print("The snowman melted before you guessed the word")
             print(f"The word was {secret_word}")
+            display_game_state(mistakes, secret_word, guessed_letters)
             break
-
-        if len(guessed_letters) == len(secret_word):
-            print(f"You saved the snowman by guessing the word {secret_word}")
-            break
-
-        display_game_state(mistakes, secret_word, guessed_letters)
-    display_game_state(mistakes, secret_word, guessed_letters)
-
-
