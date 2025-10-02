@@ -45,7 +45,7 @@ def display_game_state(mistakes, secret_word, guessed_letters):
         print(STAGES[mistakes])
 
 
-def get_input(secret_word, guessed_letters, wrong_letters):
+def get_input(guessed_letters, wrong_letters):
     while True:
         try:
             guess = input("Guess a letter: ").lower().strip()
@@ -78,7 +78,7 @@ def play_game():
 
         while True:
             display_game_state(mistakes, secret_word, guessed_letters)
-            guess = get_input(secret_word, guessed_letters, wrong_letters)
+            guess = get_input(guessed_letters, wrong_letters)
 
             print("You guessed:", guess)
 
