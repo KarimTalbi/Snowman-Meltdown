@@ -1,3 +1,5 @@
+"""main execution point"""
+
 from game_logic import play_game
 
 if __name__ == "__main__":
